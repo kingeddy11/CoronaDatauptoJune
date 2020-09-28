@@ -1,0 +1,59 @@
+import requests
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import os
+
+
+# 'https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.csv'
+
+
+'''
+We are using the 3 digit ISO code here because it is more universal
+'''
+
+file_name = "owid-covid-data.csv"
+
+os.chdir("C:\\Users\\edwar\\Desktop")
+
+data = pd.read_csv(file_name, header = 0, index_col  =  'iso_code')
+
+# print(data.head())
+
+# Brazil, Great Britain, Canada, China, France, Germany,  India, Italy, Japan, South Korea, Mexico,  Spain, US
+country_list = ['BRA', 'GBR', 'CAN', 'CHN', 'FRA', 'DEU', 'IND', 'ITA', 'JPN', 'KOR', 'MEX', 'ESP', 'USA']
+
+'''
+Getting rid of some colums
+'''
+discard = ['total_tests','new_tests', 'total_tests_per_thousand', 'new_tests_per_thousand', 'new_tests_smoothed',	'new_tests_smoothed_per_thousand',	'tests_units']
+for col in discard:
+    del data[col]
+
+#print(data.head())
+
+data_pd = pd.DataFrame(data)
+'''
+Brazil data follows 
+'''
+bra = data_pd.loc['BRA']
+print(bra)
+sns.lineplot(x= bra['date'], y = bra['new_deaths'])
+plt.xticks(rotation=90)
+#plt.locator_params(axis='x', nbins=10)
+#plt.legend()
+plt.show()
+
+'''
+Great Britain data
+
+'''
+gbr = data_pd.loc['GBR']
+print(gbr)
+sns.lineplot(x= gbr['date'], y = gbr['new_deaths'])
+plt.xticks(rotation=90)
+plt.show()
+
+
+#labels for x are a bit messed up on graph
