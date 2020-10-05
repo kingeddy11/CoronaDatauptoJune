@@ -1,0 +1,57 @@
+import requests
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import os
+import matplotlib.dates as mdates
+from matplotlib.dates import DateFormatter
+'''
+make sure you have these Seaborn, Matplotlib, and Pandas installed in your IDE or else it won't run
+'''
+
+# 'https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.csv'
+
+
+'''
+We are using the 3 digit ISO code here because it is more universal
+'''
+
+file_name = "owid-covid-data.csv"
+
+os.chdir("C:\\Users\\edwar\\Desktop")
+
+data = pd.read_csv(file_name, parse_dates=['date'], index_col  =  'iso_code')
+
+# print(data.head())
+
+# Brazil, Great Britain, Canada, China, France, Germany,  India, Italy, Japan, South Korea, Mexico,  Spain, US
+country_list = ['BRA', 'GBR', 'CAN', 'CHN', 'FRA', 'DEU', 'IND', 'ITA', 'JPN', 'KOR', 'MEX', 'ESP', 'USA']
+
+discard = ['total_tests','new_tests', 'total_tests_per_thousand', 'new_tests_per_thousand', 'new_tests_smoothed',	'new_tests_smoothed_per_thousand',	'tests_units']
+for col in discard:
+    del data[col]
+
+#print(data.head())
+
+data_pd = pd.DataFrame(data)
+
+
+'''
+China data
+
+'''
+chn = data_pd.loc['CHN']
+print(chn.head())
+#sns.lineplot(x= gbr['date'], y = gbr['new_deaths'])
+#plt.xticks(rotation=90)
+#plt.show()
+fig, ax = plt.subplots(figsize=(12, 12))
+plt.plot(chn['date'], chn['new_deaths'])
+ax.set(xlabel="Date",
+       ylabel="New Deaths",
+       title="China Daily New Deaths\nJanuary 2020-June 2020")
+date_form = DateFormatter("%m-%d")
+ax.xaxis.set_major_formatter(date_form)
+ax.xaxis.set_major_locator(mdates.WeekdayLocator(interval=2))
+plt.show()
