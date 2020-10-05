@@ -28,9 +28,7 @@ data = pd.read_csv(file_name, parse_dates=['date'], index_col  =  'iso_code')
 # Brazil, Great Britain, Canada, China, France, Germany,  India, Italy, Japan, South Korea, Mexico,  Spain, US
 country_list = ['BRA', 'GBR', 'CAN', 'CHN', 'FRA', 'DEU', 'IND', 'ITA', 'JPN', 'KOR', 'MEX', 'ESP', 'USA']
 
-'''
-Gonna get rid of some columns, not essential now and will just slow the code down IMO
-'''
+
 discard = ['total_tests','new_tests', 'total_tests_per_thousand', 'new_tests_per_thousand', 'new_tests_smoothed',	'new_tests_smoothed_per_thousand',	'tests_units']
 for col in discard:
     del data[col]
